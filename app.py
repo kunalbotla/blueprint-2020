@@ -6,4 +6,4 @@ app = Flask(__name__)
 def hello_world():
     return render_template('index.html', name='Kunal')
 
-app.run(port=3000, debug=true)
+app.run(port=3000, debug=True)
