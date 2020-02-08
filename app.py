@@ -1,9 +1,21 @@
-from flask import Flask
+from flask import Flask, render_template, request
+import datetime
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
-def hello_world():
-    return render_template('index.html', name='Kunal')
+messages = []
 
-app.run(port=3000, debug=True)
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('index.html', messages=messages)
+
+@app.route('/message', methods=['POST'])
+def new_message():
+    print(request.form)
+    message = request.form['message']
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    new_message = {'message': message, 'ts': now}
+    messages.append(new_message)
+    return 'success'
+
+app.run(port=3000, debug=True, host='0.0.0.0')
